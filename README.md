@@ -13,5 +13,5 @@ To run:
 ```sh
 cd src
 rustc main.rs
-./main >out.svg
+./main
 ```
