@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::prelude::*;
 
 use tesselation::Point2d;
+use tesselation::Tile;
 
 pub struct SVGWriter {
   file: File,
@@ -20,7 +21,7 @@ const POLYGON_TOP: &str ="    <polygon points=\"";
 const POLYGON_TAIL: &str = "\" stroke-width=\"0.2%\" stroke=\"black\" fill=\"lightgrey\" />";
 
 fn svg_polygon(points: Vec<Point2d>) -> String {
-  let mut res: String = String::from(POLYGON_TOP);
+  let mut res = String::from(POLYGON_TOP);
   let points_str: Vec<String> = points.iter().map(|p| format!("{},{}", p.0, p.1)).collect();
   res.push_str(&points_str.join(" "));
   res.push_str(POLYGON_TAIL);
@@ -32,9 +33,11 @@ impl SVGWriter {
     Ok(Self { file: File::create(filename)? })
   }
 
-  pub fn write_model(&mut self, model: Vec<Point2d>) -> std::io::Result<()> {
+  pub fn write_model(&mut self, model: Vec<Tile>) -> std::io::Result<()> {
     self.file.write_all(SVG_TOP.as_bytes())?;
-    self.file.write_all(svg_polygon(model).as_bytes())?;
+    for tile in model {
+      self.file.write_all(svg_polygon(tile).as_bytes())?;
+    }
     self.file.write_all(SVG_TAIL.as_bytes())?;
     Ok(())
   }

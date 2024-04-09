@@ -5,7 +5,7 @@ use svg_writer::SVGWriter;
 
 fn main() -> std::io::Result<()> {
   let mut writer = SVGWriter::new("out.svg")?;
-  let square = tesselation::get_square();
-  writer.write_model(square)?;
+  let model= tesselation::get_model();
+  writer.write_model(model)?;
   Ok(())
 }
