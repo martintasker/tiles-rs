@@ -11,7 +11,8 @@ It's going to be quite a journey.  We'll start small.
 To run:
 
 ```sh
-cd src
-rustc main.rs
-./main
+cargo build
+cargo run
 ```
+
+Then observe `src/out.svg` in some preview or browser.
