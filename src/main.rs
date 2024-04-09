@@ -24,11 +24,26 @@ fn svg_polygon(points: Vec<Point2d>) -> String {
   res
 }
 
+struct SVGWriter {
+  file: File,
+}
+
+impl SVGWriter {
+  pub fn new(filename: &str) -> std::io::Result<Self> {
+    Ok(Self { file: File::create(filename)? })
+  }
+
+  pub fn write_model(&mut self, model: Vec<Point2d>) -> std::io::Result<()> {
+    self.file.write_all(SVG_TOP.as_bytes())?;
+    self.file.write_all(svg_polygon(model).as_bytes())?;
+    self.file.write_all(SVG_TAIL.as_bytes())?;
+    Ok(())
+  }
+}
+
 fn main() -> std::io::Result<()> {
-  let mut file = File::create("out.svg")?;
-  file.write_all(SVG_TOP.as_bytes())?;
+  let mut writer = SVGWriter::new("out.svg")?;
   let square = tesselation::get_square();
-  file.write_all(svg_polygon(square).as_bytes())?;
-  file.write_all(SVG_TAIL.as_bytes())?;
+  writer.write_model(square)?;
   Ok(())
 }
