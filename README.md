@@ -14,7 +14,7 @@ To run:
 cargo run
 ```
 
-Then observe `src/out.svg` in some preview or browser.
+Then observe the output SVG in some preview or browser (or here).
 
 ![Hexagons](./out12.svg)
 ![Octagons](./out8.svg)

@@ -2,28 +2,7 @@
 
 ## v0.3.0, 2024-04-10 22:21 BST
 
-![Octagons and squares](./gallery/octagons-and-squares.v0.3.0.svg)
-![Hexagons and triangles](./gallery/hexagons-and-triangles.v0.3.0.svg)
 
-Features:
-
-* `omega12` implements 12-direction coordinate system using $[1, \sqrt 3]$ as basis increments
-* we use this to construct a tesselation with one central hexagon, then layers of surrounding hexagons and triangles
-* we've upgraded the octagon-and-square tesselation also to do many surrounding layers
-
-In terms of Rust,
-
-* now on day 3, using the same materials
-* using the builder pattern
-* fixing borrowing issues
-* beginning to use generics
-* implemented some rather trivial test code
-
-So this solves the issues anticipated from v0.2.0.  For the next release, we'll
-
-* introduce a Spectre
-* attempt to improve on generics
-* do much-needed tidying up between 8- and 12-direction and common things anyway
 
 ## v0.2.0, 2024-04-10 08:33 BST
 
