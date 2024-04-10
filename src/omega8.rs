@@ -26,7 +26,7 @@ pub const DIR8_UNIT_VECTORS: [Dir8; N_DIRECTIONS] = [
 ];
 
 // points are on the same omega8 basis, obtained by adding vectors to starting-points
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Debug)]
 pub struct Point8 {
   pub x: D8Basis,
   pub y: D8Basis,
@@ -70,4 +70,23 @@ pub fn get_shape(start_point: Point8, start_direction: usize, shape: &[usize]) -
     d += dir8;
   }
   return res;
+}
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+
+  impl Point8 {
+    pub fn origin() -> Self {
+      Point8 {
+        x: [0, 0],
+        y: [0, 0],
+      }
+    }
+  }
+
+  #[test]
+  fn test_unit_0() {
+      assert_eq!(Point8::origin().add_unit_in_direction(0), Point8{x: [2, 0], y: [0, 0]});
+  }
 }
