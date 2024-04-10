@@ -1,7 +1,7 @@
 use omega8::Point8;
-use omega8::Point2d;
 use omega8::get_octagon;
-use omega8::get_point2d_list;
+use point2d::Point2d;
+use point2d::get_point2d_list;
 
 pub type Tile = Vec<Point2d>;
 

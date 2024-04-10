@@ -1,5 +1,6 @@
 mod tesselation;
 mod svg_writer;
+mod point2d;
 mod omega8;
 
 use svg_writer::SVGWriter;

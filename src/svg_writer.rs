@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 
-use omega8::Point2d;
+use point2d::Point2d;
 use tesselation::Tile;
 
 pub struct SVGWriter {
