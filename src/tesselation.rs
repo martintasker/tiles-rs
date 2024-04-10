@@ -1,13 +1,10 @@
 use omega8::Point8;
 use omega8::get_octagon;
 use omega8::get_square;
-use point2d::Point2d;
-use point2d::get_point2d_list;
 
 pub type Tile = Vec<Point8>; // use in the model
-pub type Tile2d = Vec<Point2d>; // use when outputting to 2d coords
 
-pub fn get_model_point8() -> Vec<Tile> {
+pub fn get_model() -> Vec<Tile> {
   let mut res: Vec<Tile> = Vec::new();
 
   // construct an initial central octagon
@@ -30,8 +27,4 @@ pub fn get_model_point8() -> Vec<Tile> {
 
   // that's it
   res
-}
-
-pub fn get_model() -> Vec<Tile2d> {
-  return get_model_point8().iter().map(get_point2d_list).collect();
 }

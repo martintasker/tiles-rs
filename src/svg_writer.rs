@@ -5,7 +5,7 @@ use std::fs::File;
 use std::io::prelude::*;
 
 use point2d::Point2d;
-use tesselation::Tile2d;
+use point2d::Tile2d;
 
 pub struct SVGWriter {
   file: File,
