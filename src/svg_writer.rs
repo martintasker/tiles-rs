@@ -1,3 +1,6 @@
+// there's no claim to beauty in here -- we'll come back to this
+// attention for the moment is in producing the tesselation
+
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -11,6 +14,7 @@ pub struct SVGWriter {
 const SVG_TOP: &str = r#"
 <svg viewBox="-5 -5 10 10" xmlns="http://www.w3.org/2000/svg" width="1000" height="1000">
   <g transform="scale(1 -1)">
+  <rect x="-5" y="-5" width="10" height="10" fill="darkgrey" stroke-width="0" />
 "#;
 const SVG_TAIL: &str = r#"
   </g>
