@@ -11,7 +11,6 @@ It's going to be quite a journey.  We'll start small.
 To run:
 
 ```sh
-cargo build
 cargo run
 ```
 

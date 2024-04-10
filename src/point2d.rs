@@ -25,3 +25,13 @@ pub fn get_point2d_from12(point12: &Point12) -> Point2d {
     (point12.y[0] as f64 + point12.y[1] as f64 * D12_BASIS[1])/(D12_BASIS_DIVISOR as f64)
   );
 }
+
+pub fn is_all_inside(points: &Vec<Point2d>) -> bool {
+  points.iter().all(is_inside)
+}
+
+const HALF_SIZE: f64 = 19.5;
+
+pub fn is_inside(point: &Point2d) -> bool {
+  f64::abs(point.0) < HALF_SIZE && f64::abs(point.1) < HALF_SIZE
+}
