@@ -9,6 +9,7 @@ pub type Tile2d = Vec<Point2d>; // use when outputting to 2d coords
 
 pub fn get_model_point8() -> Vec<Tile> {
   let mut res: Vec<Tile> = Vec::new();
+
   // construct an initial central octagon
   let centre_octagon = get_octagon(Point8{x: [-1, 0], y: [-1, -1]}, 0);
 
@@ -25,8 +26,12 @@ pub fn get_model_point8() -> Vec<Tile> {
     let adjacent_octagon = get_octagon(anchor_point, initial_direction);
     res.push(adjacent_octagon);
   }
+
+  // now we can push the central octagon as we don't need to reference it anymore
   res.push(centre_octagon);
-  return res;
+
+  // that's it
+  res
 }
 
 pub fn get_model() -> Vec<Tile2d> {

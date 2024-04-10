@@ -16,3 +16,7 @@ cargo run
 ```
 
 Then observe `src/out.svg` in some preview or browser.
+
+![Octagons and squares](./gallery/octagons-and-squares.v0.2.0.svg)
+
+See [release notes](./RELEASES.md).
