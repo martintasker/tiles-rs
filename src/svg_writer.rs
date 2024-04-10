@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::prelude::*;
 
 use point2d::Point2d;
-use tesselation::Tile;
+use tesselation::Tile2d;
 
 pub struct SVGWriter {
   file: File,
@@ -33,7 +33,7 @@ impl SVGWriter {
     Ok(Self { file: File::create(filename)? })
   }
 
-  pub fn write_model(&mut self, model: Vec<Tile>) -> std::io::Result<()> {
+  pub fn write_model(&mut self, model: Vec<Tile2d>) -> std::io::Result<()> {
     self.file.write_all(SVG_TOP.as_bytes())?;
     for tile in model {
       self.file.write_all(svg_polygon(tile).as_bytes())?;

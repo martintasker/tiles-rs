@@ -15,7 +15,7 @@ pub struct Dir8 {
   dy: D8Basis,
 }
 pub const DIR8_UNIT_VECTORS: [Dir8; N_DIRECTIONS] = [
-  Dir8 {dx: [2, 0], dy: [0, 0]}, // 0 degrees
+  Dir8 {dx: [2, 0], dy: [0, 0]},
   Dir8 {dx: [0, 1], dy: [0, 1]},
   Dir8 {dx: [0, 0], dy: [2, 0]},
   Dir8 {dx: [0, -1], dy: [0, 1]},
@@ -42,9 +42,19 @@ impl Point8 {
   }
 }
 
+// square: turn left 90 degrees at each node
+pub const SQUARE8: [usize; 4] = [
+  2, 2, 2, 2
+];
+
+// octagon: turn left 45 degrees at each node
 pub const OCTAGON8: [usize; 8] = [
   1, 1, 1, 1, 1, 1, 1, 1
 ];
+
+pub fn get_square(start_point: Point8, start_direction: usize) -> Vec<Point8> {
+  return get_shape(start_point, start_direction, &SQUARE8);
+}
 
 pub fn get_octagon(start_point: Point8, start_direction: usize) -> Vec<Point8> {
   return get_shape(start_point, start_direction, &OCTAGON8);

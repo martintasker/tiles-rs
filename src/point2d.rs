@@ -4,7 +4,7 @@ use omega8::D8_BASIS_DIVISOR;
 
 pub struct Point2d(pub f64, pub f64);
 
-pub fn get_point2d_list(point8_list: Vec<Point8>) -> Vec<Point2d> {
+pub fn get_point2d_list(point8_list: &Vec<Point8>) -> Vec<Point2d> {
   return point8_list.iter().map(get_point2d).collect();
 }
 
