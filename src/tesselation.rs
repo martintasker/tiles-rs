@@ -1,4 +1,7 @@
-pub struct Point2d(pub f64, pub f64);
+use omega8::Point8;
+use omega8::Point2d;
+use omega8::get_octagon;
+use omega8::get_point2d_list;
 
 pub type Tile = Vec<Point2d>;
 
@@ -12,8 +15,14 @@ pub fn get_square(x0: f64, y0: f64) -> Tile {
   return square;
 }
 
+pub fn get_octagon_as_tile() -> Tile {
+  let octagon = get_octagon(Point8{x: [-1, 0], y: [-1, -1]}, 0);
+  return get_point2d_list(octagon);
+}
+
 pub fn get_model() -> Vec<Tile> {
   return vec![
+    get_octagon_as_tile(),
     get_square(-0.5, -0.5),
     get_square(0.5, -0.5)
   ]

@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 
-use tesselation::Point2d;
+use omega8::Point2d;
 use tesselation::Tile;
 
 pub struct SVGWriter {
@@ -18,7 +18,7 @@ const SVG_TAIL: &str = r#"
 "#;
 
 const POLYGON_TOP: &str ="    <polygon points=\"";
-const POLYGON_TAIL: &str = "\" stroke-width=\"0.2%\" stroke=\"black\" fill=\"lightgrey\" />";
+const POLYGON_TAIL: &str = "\" stroke-width=\"0.2%\" stroke=\"black\" fill=\"lightgrey\" />\n";
 
 fn svg_polygon(points: Vec<Point2d>) -> String {
   let mut res = String::from(POLYGON_TOP);
