@@ -33,6 +33,7 @@ pub fn get() -> Vec<Tile8> {
         builder.add_tile(&adjacent_square);
         tail_anchor_point = adjacent_square[3];
       }
+
       layer_anchor_point = layer_anchor_octagon[3];
     }
   }

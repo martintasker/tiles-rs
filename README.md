@@ -17,6 +17,7 @@ cargo run
 
 Then observe `src/out.svg` in some preview or browser.
 
-![Output](./out.svg)
+![Hexagons](./out12.svg)
+![Octagons](./out8.svg)
 
 See [release notes](./RELEASES.md).

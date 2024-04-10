@@ -47,10 +47,19 @@ impl Point12 {
   }
 }
 
+// triangle: turn left 120 degrees at each node
+pub const TRIANGLE12: [usize; 3] = [
+  4, 4, 4
+];
+
 // hexagon: turn left 60 degrees at each node
 pub const HEXAGON12: [usize; 6] = [
   2, 2, 2, 2, 2, 2
 ];
+
+pub fn get_triangle(start_point: Point12, start_direction: usize) -> Vec<Point12> {
+  return get_shape(start_point, start_direction, &TRIANGLE12);
+}
 
 pub fn get_hexagon(start_point: Point12, start_direction: usize) -> Vec<Point12> {
   return get_shape(start_point, start_direction, &HEXAGON12);
