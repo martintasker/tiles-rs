@@ -32,18 +32,14 @@ pub fn get_model() -> Vec<Tile> {
   let centre_octagon = get_octagon(Point8{x: [-1, 0], y: [-1, -1]}, 0);
   builder.add_tile(&centre_octagon);
 
-  // construct a set of squares surrounding the central octagon, on diagonals
-  for [point_index, initial_direction] in [[1, 7], [3, 1], [5, 3], [7, 5]] {
-    let anchor_point: Point8 = centre_octagon[point_index];
-    let adjacent_square = get_square(anchor_point, initial_direction);
-    builder.add_tile(&adjacent_square);
-  }
-
-  // construct a set of octagons surrounding the central octagon
+  // add squares and octagons around the edge
   for [point_index, initial_direction] in [[2, 7], [4, 1], [6, 3], [0, 5]] {
-    let anchor_point: Point8 = centre_octagon[point_index];
-    let adjacent_octagon = get_octagon(anchor_point, initial_direction);
+    let octagon_anchor_point: Point8 = centre_octagon[point_index];
+    let adjacent_octagon = get_octagon(octagon_anchor_point, initial_direction);
     builder.add_tile(&adjacent_octagon);
+    let square_anchor_point: Point8 = adjacent_octagon[7];
+    let adjacent_square = get_square(square_anchor_point, (initial_direction + 2) % 8);
+    builder.add_tile(&adjacent_square);
   }
 
   builder.build().tiles
