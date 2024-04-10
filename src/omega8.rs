@@ -26,7 +26,7 @@ pub const DIR8_UNIT_VECTORS: [Dir8; N_DIRECTIONS] = [
 ];
 
 // points are on the same omega8 basis, obtained by adding vectors to starting-points
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct Point8 {
   pub x: D8Basis,
   pub y: D8Basis,
