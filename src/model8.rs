@@ -1,5 +1,6 @@
 use tesselation::TesselationBuilder;
-use omega8::{Point8, get_octagon, get_square};
+use omega8::Point8;
+use shapes::{get_octagon, get_square};
 
 pub type Tile8 = Vec<Point8>;
 

@@ -5,6 +5,7 @@ mod omega8;
 mod model8;
 mod omega12;
 mod model12;
+mod shapes;
 
 use svg_writer::SVGWriter;
 use point2d::{get_point2d_list_from12, get_point2d_list_from8, is_all_inside};

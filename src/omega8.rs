@@ -42,36 +42,6 @@ impl Point8 {
   }
 }
 
-// square: turn left 90 degrees at each node
-pub const SQUARE8: [usize; 4] = [
-  2, 2, 2, 2
-];
-
-// octagon: turn left 45 degrees at each node
-pub const OCTAGON8: [usize; 8] = [
-  1, 1, 1, 1, 1, 1, 1, 1
-];
-
-pub fn get_square(start_point: Point8, start_direction: usize) -> Vec<Point8> {
-  return get_shape(start_point, start_direction, &SQUARE8);
-}
-
-pub fn get_octagon(start_point: Point8, start_direction: usize) -> Vec<Point8> {
-  return get_shape(start_point, start_direction, &OCTAGON8);
-}
-
-pub fn get_shape(start_point: Point8, start_direction: usize, shape: &[usize]) -> Vec<Point8> {
-  let mut res: Vec<Point8> = Vec::new();
-  let mut p = start_point.clone();
-  let mut d = start_direction;
-  for dir8 in shape {
-    res.push(p.clone());
-    p = p.add_unit_in_direction(d);
-    d += dir8;
-  }
-  return res;
-}
-
 #[cfg(test)]
 mod tests {
   use super::*;
