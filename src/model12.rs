@@ -1,8 +1,6 @@
 use tesselation::TesselationBuilder;
 use omega12::Point12;
-use shapes::{get_hexagon, get_triangle};
-
-pub type Tile12 = Vec<Point12>;
+use shapes::{Tile12, get_hexagon, get_triangle};
 
 pub fn get() -> Vec<Tile12> {
   let mut builder = TesselationBuilder::new();

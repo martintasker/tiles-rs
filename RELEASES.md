@@ -1,5 +1,18 @@
 # Releases
 
+## work in progress
+
+![Spectre tiling](./out-spectre.svg)
+
+Features:
+
+* needed refactoring to split 12 and 8-ness from models
+* needed support for negative angles, for concave shapes
+
+Must-do:
+
+* to get further tiling without resorting to direct coordinate arithmetic in model, even manually placed, need to be able to align start of next shape starting at an arbitrary point within the shape, not just at zero
+
 ## v0.3.0, 2024-04-10 22:21 BST
 
 ![Octagons and squares](./gallery/octagons-and-squares.v0.3.0.svg)
