@@ -14,7 +14,7 @@ pub fn get() -> Vec<Tile8> {
     let mut layer_anchor_point = centre_octagon[centre_octagon_point_index];
 
     // build layers in the given direction
-    for layer in 1..=7 {
+    for layer in 1..=2 {
       // start with anchor octagon and square
       let layer_anchor_octagon = get_octagon(layer_anchor_point, initial_direction);
       builder.add_tile(&layer_anchor_octagon);

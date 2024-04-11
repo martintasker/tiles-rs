@@ -14,7 +14,7 @@ pub fn get() -> Vec<Tile12> {
     let mut layer_anchor_point = centre_hexagon[centre_hexagon_point_index];
 
     // build layers in the given direction
-    for layer in 1..=9 {
+    for layer in 1..=3 {
       // start with anchor octagon and square
       let layer_anchor_hexagon = get_hexagon(layer_anchor_point, initial_direction);
       builder.add_tile(&layer_anchor_hexagon);

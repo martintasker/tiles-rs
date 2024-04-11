@@ -5,7 +5,7 @@ use shapes::{Tile12, get_spectre};
 pub fn get() -> Vec<Tile12> {
   let mut builder = TesselationBuilder::new();
 
-  let s0 = get_spectre(Point12::origin(), 2);
+  let s0 = get_spectre(Point12 {x: [5, 0], y: [-9, 0]}, 2);
   builder.add_tile(&s0);
   let s1 = get_spectre(s0[4], 3);
   builder.add_tile(&s1);

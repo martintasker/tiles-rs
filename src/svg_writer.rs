@@ -11,9 +11,9 @@ pub struct SVGWriter {
 }
 
 const SVG_TOP: &str = r#"
-<svg viewBox="-20 -20 40 40" xmlns="http://www.w3.org/2000/svg" width="800" height="800">
+<svg viewBox="-8 -8 16 16" xmlns="http://www.w3.org/2000/svg" width="400" height="400">
   <g transform="scale(1 -1)">
-  <rect x="-20" y="-20" width="40" height="40" fill="darkgrey" stroke-width="0" />
+  <rect x="-8" y="-8" width="16" height="16" fill="darkgrey" stroke-width="0" />
 "#;
 const SVG_TAIL: &str = r#"
   </g>

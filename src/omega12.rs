@@ -38,13 +38,6 @@ pub struct Point12 {
 }
 
 impl Point12 {
-  pub fn origin() -> Self {
-    Point12 {
-      x: [0, 0],
-      y: [0, 0],
-    }
-  }
-
   pub fn add_unit_in_direction(&self, d: usize) -> Self {
     let dir = &DIR12_UNIT_VECTORS[d % N_DIRECTIONS];
     return Point12 {
@@ -57,6 +50,15 @@ impl Point12 {
 #[cfg(test)]
 mod tests {
   use super::*;
+
+  impl Point12 {
+    pub fn origin() -> Self {
+      Point12 {
+        x: [0, 0],
+        y: [0, 0],
+      }
+    }
+  }
 
   #[test]
   fn test_unit_0() {

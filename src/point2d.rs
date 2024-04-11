@@ -30,7 +30,7 @@ pub fn is_all_inside(points: &Vec<Point2d>) -> bool {
   points.iter().all(is_inside)
 }
 
-const HALF_SIZE: f64 = 19.5;
+const HALF_SIZE: f64 = 7.9;
 
 pub fn is_inside(point: &Point2d) -> bool {
   f64::abs(point.0) < HALF_SIZE && f64::abs(point.1) < HALF_SIZE
