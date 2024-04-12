@@ -1,4 +1,7 @@
-use omega_coords::{SQRT2, SQRT3, OmegaSubCoordBasis, OmegaVector};
+use omega_coords::{OmegaSubCoordBasis, OmegaVector, OmegaSpace};
+
+pub const SQRT2: f64 = std::f64::consts::SQRT_2;
+pub const SQRT3: f64 = 1.7320508075688772935274463;
 
 #[allow(dead_code)]
 pub const OMEGA8_SUB_COORD_BASIS: OmegaSubCoordBasis<2> = [
@@ -39,20 +42,15 @@ pub const OMEGA12_UNIT_VECTORS: [OmegaVector<2>; 12] = [
 ];
 
 #[allow(dead_code)]
-pub struct Omega<const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
-  pub unit_vectors: [OmegaVector<BASIS_SIZE>; N_DIRECTIONS],
-}
-
-#[allow(dead_code)]
-pub fn get_omega8() -> Omega<8, 2> {
-  return Omega {
+pub fn get_omega8() -> OmegaSpace<8, 2> {
+  return OmegaSpace {
     unit_vectors: OMEGA8_UNIT_VECTORS,
   };
 }
 
 #[allow(dead_code)]
-pub fn get_omega12() -> Omega<12, 2> {
-  return Omega {
+pub fn get_omega12() -> OmegaSpace<12, 2> {
+  return OmegaSpace {
     unit_vectors: OMEGA12_UNIT_VECTORS,
   };
 }
