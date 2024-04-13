@@ -1,4 +1,4 @@
-use omega_coords::{OmegaSubCoordBasis, OmegaVector};
+use omega_coords::{OmegaSubCoordBasis, OmegaVector, OmegaPoint};
 
 pub const SQRT2: f64 = std::f64::consts::SQRT_2;
 pub const SQRT3: f64 = 1.7320508075688772935274463;
@@ -63,7 +63,21 @@ impl<const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpace<N_DIRECTIONS
   }
 }
 
+#[allow(dead_code)]
+pub struct OmegaSpacePoint<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
+  space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>,
+  point: OmegaPoint<BASIS_SIZE>,
+}
 
+impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a, N_DIRECTIONS, BASIS_SIZE> {
+  #[allow(dead_code)]
+  pub fn new(space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>) -> Self {
+    OmegaSpacePoint{
+      space: &space,
+      point: OmegaPoint::origin(),
+    }
+  }
+}
 
 #[cfg(test)]
 mod tests {
