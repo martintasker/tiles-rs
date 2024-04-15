@@ -1,5 +1,7 @@
 use omega_coords::{OmegaSubCoordBasis, OmegaVector, OmegaPoint};
 
+use crate::omega_coords::XYPoint;
+
 pub const SQRT2: f64 = std::f64::consts::SQRT_2;
 pub const SQRT3: f64 = 1.7320508075688772935274463;
 
@@ -76,6 +78,11 @@ impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a
       space: &space,
       point: OmegaPoint::origin(),
     }
+  }
+
+  #[allow(dead_code)]
+  pub fn to_xy_point(&self) -> XYPoint {
+    self.point.to_xy_point(&self.space.basis)
   }
 }
 
