@@ -27,7 +27,6 @@ pub struct OmegaPoint<const N: usize> {
 }
 
 impl<const N: usize> OmegaPoint<N> {
-  #[allow(dead_code)]
   pub fn origin() -> Self {
     Self{x: [0; N], y: [0; N]}
   }
@@ -43,7 +42,12 @@ pub struct OmegaVector<const N: usize> {
   pub dy: OmegaSubCoords<N>,
 }
 
-#[allow(dead_code)]
+impl<const N: usize> OmegaVector<N> {
+  pub fn zero() -> Self {
+    Self{dx: [0; N], dy: [0; N]}
+  }
+}
+
 impl<const N: usize> OmegaPoint<N> {
   pub fn plus(&self, v: &OmegaVector<N>) -> Self {
     OmegaPoint {

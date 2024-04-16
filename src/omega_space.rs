@@ -66,6 +66,22 @@ impl<const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpace<N_DIRECTIONS
 }
 
 #[allow(dead_code)]
+pub struct OmegaSpaceVector<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
+  space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>,
+  vector: OmegaVector<BASIS_SIZE>,
+}
+
+impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpaceVector<'a, N_DIRECTIONS, BASIS_SIZE> {
+  #[allow(dead_code)]
+  pub fn new(space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>) -> Self {
+    OmegaSpaceVector{
+      space: &space,
+      vector: OmegaVector::zero(),
+    }
+  }
+}
+
+#[allow(dead_code)]
 pub struct OmegaSpacePoint<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
   space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>,
   point: OmegaPoint<BASIS_SIZE>,
@@ -77,6 +93,22 @@ impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a
     OmegaSpacePoint{
       space: &space,
       point: OmegaPoint::origin(),
+    }
+  }
+
+  #[allow(dead_code)]
+  pub fn plus(&self, vector: &OmegaSpaceVector<'a, N_DIRECTIONS, BASIS_SIZE>) -> Self {
+    OmegaSpacePoint {
+      space: &self.space,
+      point: self.point.plus(&vector.vector)
+    }
+  }
+
+  #[allow(dead_code)]
+  pub fn plus_unit_in_direction(&self, direction: usize) -> Self {
+    OmegaSpacePoint {
+      space: &self.space,
+      point: self.point.plus(&self.space.unit_vectors[direction]),
     }
   }
 
@@ -121,5 +153,22 @@ mod tests {
     let target_xy = target.to_xy_point(&space.basis);
     assert_eq!(target_xy.x, 0.0);
     assert_eq!(target_xy.y, -1.0);
+  }
+
+  #[test]
+  fn test_space_point() {
+    let space = OMEGA12_SPACE;
+    let point12 = OmegaSpacePoint::new(&space);
+    let xy_point = point12.to_xy_point();
+    assert_eq!(xy_point.x, 0.0);
+    assert_eq!(xy_point.y, 0.0);
+
+    let xy_point_11 =
+      OmegaSpacePoint::new(&space)
+        .plus_unit_in_direction(0)
+        .plus_unit_in_direction(3)
+        .to_xy_point();
+    assert_eq!(xy_point_11.x, 1.0);
+    assert_eq!(xy_point_11.y, 1.0);
   }
 }
