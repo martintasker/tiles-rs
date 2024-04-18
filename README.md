@@ -6,6 +6,8 @@ Our aim is to
 * generate Spectre and Hat tilings
 * generate Penrose tilings
 
+We'll be using [convenient coordinate systems](./doc/omega-space.md) to make the calculations easier.
+
 It's going to be quite a journey.  We'll start small.
 
 To run:

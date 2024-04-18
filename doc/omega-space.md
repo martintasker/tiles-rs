@@ -26,7 +26,7 @@ Now it happens that the unit vectors in these spaces can be expressed in a simpl
 $$
 \begin{align*}
 \omega_{8, 0} &= (1, 0), \\
-\omega_{8, 1} &= (\sqrt 2 / 2, \sqrt 2 / 2), \\
+\omega_{8, 1} &= (\tfrac{1}{2} \sqrt 2, \tfrac{1}{2} \sqrt 2), \\
 \omega_{8, 2} &= (0, 1) \\
 \end{align*}
 $$
@@ -36,8 +36,8 @@ And similarly, for $\omega_{12}$, the first four unit vectors (at 0, 30, 60 and 
 $$
 \begin{align*}
 \omega_{12, 0} &= (1, 0), \\
-\omega_{12, 1} &= (\sqrt 3 / 2, 1 / 2), \\
-\omega_{12, 2} &= (1 / 2, \sqrt 3 / 2), \\
+\omega_{12, 1} &= (\tfrac{1}{2} \sqrt 3, \tfrac{1}{2}), \\
+\omega_{12, 2} &= (\tfrac{1}{2}, \tfrac{1}{2} \sqrt 3), \\
 \omega_{12, 3} &= (0, 1) \\
 \end{align*}
 $$
@@ -48,7 +48,14 @@ $$
 \begin{align*}
 \omega_{8, 0} &= \tfrac{1}{2}([2, 0] . [1, \sqrt 2], [0, 0] . [1, \sqrt 2]), \\
 \omega_{8, 1} &= \tfrac{1}{2}([0, 1] . [1, \sqrt 2], [0, 1] . [1, \sqrt 2]), \\
-\omega_{8, 2} &= \tfrac{1}{2}([0, 0] . [1, \sqrt 2], [2, 0] . [1, \sqrt 2]), \\
+\omega_{8, 2} &= \tfrac{1}{2}([0, 0] . [1, \sqrt 2], [2, 0] . [1, \sqrt 2])
+\end{align*}
+$$
+
+and
+
+$$
+\begin{align*}
 \omega_{12, 0} &= \tfrac{1}{2}([2, 0] . [1, \sqrt 3], [0, 0] . [1, \sqrt 3]), \\
 \omega_{12, 1} &= \tfrac{1}{2}([0, 1] . [1, \sqrt 3], [1, 0] . [1, \sqrt 3]), \\
 \omega_{12, 2} &= \tfrac{1}{2}([1, 0] . [1, \sqrt 3], [0, 1] . [1, \sqrt 3]), \\
