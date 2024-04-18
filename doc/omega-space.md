@@ -127,7 +127,7 @@ And we can see that,
 * for convex polygons, like all the above, all the turns are left turns, and therefore positive numbers
 * the list of numbers adds up to the number of directions in the space
 
-We could have a shape with outward turns, like the spectre, which in $\omega_12$ has fourteen turns:
+We could have a shape with outward turns, like the spectre, which in $\omega_{12}$ has fourteen turns:
 
 * $[2, -3, 2, 3, 2, -3, 2, 0, 2, 3, -2, 3, -2, 3]$
 
