@@ -1,10 +1,24 @@
+/// XYPoint is real x, y coords
+pub struct XYPoint {
+  pub x: f64,
+  pub y: f64,
+}
+
+// a subcoordinate is the x or y coordinate for a point
+// the basis is
+// * a list of real numbers, which we dot-multiply by the subcoord integers
+// * an integer divisor, which divides the whole result
+
+/// real subcoord basis with integer fraction
 pub struct OmegaSubCoordBasis<const N: usize> {
   pub coefficients: [f64; N],
   pub divisor: i32,
 }
 
+/// integer subcoord instance
 pub type OmegaSubCoords<const N: usize> = [i32; N];
 
+/// project an omega subcoord into an x or y subcoord
 pub fn coord_projected<const N: usize>(coords: &OmegaSubCoords<N>, basis: &OmegaSubCoordBasis<N>) -> f64 {
   let mut res = 0.0;
   for i in 0..N {
@@ -13,6 +27,7 @@ pub fn coord_projected<const N: usize>(coords: &OmegaSubCoords<N>, basis: &Omega
   res / (basis.divisor as f64)
 }
 
+/// add a single subcoord pair
 pub fn add_sub_coords<const N: usize>(a: &OmegaSubCoords<N>, b: &OmegaSubCoords<N>) -> OmegaSubCoords<N> {
   let mut res = a.clone();
   for i in 0..N {
@@ -21,34 +36,35 @@ pub fn add_sub_coords<const N: usize>(a: &OmegaSubCoords<N>, b: &OmegaSubCoords<
   res
 }
 
+/// omega point is x, y subcoords
 pub struct OmegaPoint<const N: usize> {
   pub x: OmegaSubCoords<N>,
   pub y: OmegaSubCoords<N>,
 }
 
+/// omega vector is also in omega space, like point, but with dx, dy
+pub struct OmegaVector<const N: usize> {
+  pub dx: OmegaSubCoords<N>,
+  pub dy: OmegaSubCoords<N>,
+}
+
+/// origin point
 impl<const N: usize> OmegaPoint<N> {
   pub fn origin() -> Self {
     Self{x: [0; N], y: [0; N]}
   }
 }
 
-pub struct XYPoint {
-  pub x: f64,
-  pub y: f64,
-}
-
-pub struct OmegaVector<const N: usize> {
-  pub dx: OmegaSubCoords<N>,
-  pub dy: OmegaSubCoords<N>,
-}
-
+/// null vector
 impl<const N: usize> OmegaVector<N> {
   pub fn zero() -> Self {
     Self{dx: [0; N], dy: [0; N]}
   }
 }
 
+// operations on points
 impl<const N: usize> OmegaPoint<N> {
+  /// add vector
   pub fn plus(&self, v: &OmegaVector<N>) -> Self {
     OmegaPoint {
       x: add_sub_coords(&self.x, &v.dx),
@@ -56,10 +72,22 @@ impl<const N: usize> OmegaPoint<N> {
     }
   }
 
+  /// to XYPoint
   pub fn to_xy_point(&self, basis: &OmegaSubCoordBasis<N>) -> XYPoint {
     return XYPoint {
       x: coord_projected(&self.x, basis),
       y: coord_projected(&self.y, basis)
+    }
+  }
+}
+
+// operations on vectors
+impl<const N: usize> OmegaVector<N> {
+  /// add vector
+  pub fn plus(&self, v: &OmegaVector<N>) -> Self {
+    OmegaVector {
+      dx: add_sub_coords(&self.dx, &v.dx),
+      dy: add_sub_coords(&self.dy, &v.dy),
     }
   }
 }
@@ -98,5 +126,14 @@ mod tests {
     let p1 = p0.plus(&v);
     assert_eq!(p1.x, [4, 6]);
     assert_eq!(p1.y, [6, 4]);
+  }
+
+  #[test]
+  fn test_vec_plus_vec() {
+    let v0 = OmegaVector{dx: [1, 2], dy: [2, 1]};
+    let dv = OmegaVector{dx: [3, 4], dy: [4, 3]};
+    let v1 = v0.plus(&dv);
+    assert_eq!(v1.dx, [4, 6]);
+    assert_eq!(v1.dy, [6, 4]);
   }
 }

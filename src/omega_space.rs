@@ -1,9 +1,17 @@
-use omega_coords::{OmegaSubCoordBasis, OmegaVector, OmegaPoint};
+// definitions for omega8 and omega12 space
 
-use crate::omega_coords::XYPoint;
+use omega_coords::{OmegaSubCoordBasis, OmegaVector, OmegaPoint, XYPoint};
 
 pub const SQRT2: f64 = std::f64::consts::SQRT_2;
 pub const SQRT3: f64 = 1.7320508075688772935274463;
+
+/// an omega-space is defined by its size (8 or 12), unit vectors, and its basis
+pub struct OmegaSpace<const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
+  pub unit_vectors: [OmegaVector<BASIS_SIZE>; N_DIRECTIONS],
+  pub basis: OmegaSubCoordBasis<BASIS_SIZE>,
+}
+
+// basis, vectors and space for omega8
 
 pub const OMEGA8_BASIS: OmegaSubCoordBasis<2> = OmegaSubCoordBasis{
   coefficients: [1.0, SQRT2],
@@ -19,6 +27,14 @@ pub const OMEGA8_UNIT_VECTORS: [OmegaVector<2>; 8] = [
   OmegaVector {dx: [0, 0], dy: [-2, 0]},
   OmegaVector {dx: [0, 1], dy: [0, -1]},
 ];
+#[allow(dead_code)]
+pub const OMEGA8_SPACE: OmegaSpace<8, 2> = OmegaSpace {
+  unit_vectors: OMEGA8_UNIT_VECTORS,
+  basis: OMEGA8_BASIS,
+};
+
+// basis, vectors and space for omega8
+
 pub const OMEGA12_BASIS: OmegaSubCoordBasis<2> = OmegaSubCoordBasis{
   coefficients: [1.0, SQRT3],
   divisor: 2
@@ -37,57 +53,44 @@ pub const OMEGA12_UNIT_VECTORS: [OmegaVector<2>; 12] = [
   OmegaVector {dx: [1, 0], dy: [0, -1]},
   OmegaVector {dx: [0, 1], dy: [-1, 0]},
 ];
-
-pub struct OmegaSpace<const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
-  pub unit_vectors: [OmegaVector<BASIS_SIZE>; N_DIRECTIONS],
-  pub basis: OmegaSubCoordBasis<BASIS_SIZE>,
-}
-#[allow(dead_code)]
-pub const OMEGA8_SPACE: OmegaSpace<8, 2> = OmegaSpace {
-  unit_vectors: OMEGA8_UNIT_VECTORS,
-  basis: OMEGA8_BASIS,
-};
 #[allow(dead_code)]
 pub const OMEGA12_SPACE: OmegaSpace<12, 2> = OmegaSpace {
   unit_vectors: OMEGA12_UNIT_VECTORS,
   basis: OMEGA12_BASIS,
 };
 
+/// space functions
 impl<const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpace<N_DIRECTIONS, BASIS_SIZE> {
+  /// get number of directions
   #[allow(dead_code)]
   pub fn n_directions(self) -> usize {
     return N_DIRECTIONS;
   }
 
+  /// add to direction
   #[allow(dead_code)]
   pub fn direction_plus(&self, direction: usize, delta: i32) -> usize {
     (((direction + N_DIRECTIONS) as i32 + delta) as usize) % N_DIRECTIONS
   }
 }
 
-#[allow(dead_code)]
-pub struct OmegaSpaceVector<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
-  space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>,
-  vector: OmegaVector<BASIS_SIZE>,
-}
-
-impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpaceVector<'a, N_DIRECTIONS, BASIS_SIZE> {
-  #[allow(dead_code)]
-  pub fn new(space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>) -> Self {
-    OmegaSpaceVector{
-      space: &space,
-      vector: OmegaVector::zero(),
-    }
-  }
-}
-
+/// point in space
 #[allow(dead_code)]
 pub struct OmegaSpacePoint<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
   space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>,
   point: OmegaPoint<BASIS_SIZE>,
 }
 
+/// vector in space
+#[allow(dead_code)]
+pub struct OmegaSpaceVector<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
+  space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>,
+  vector: OmegaVector<BASIS_SIZE>,
+}
+
+/// point implementation
 impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a, N_DIRECTIONS, BASIS_SIZE> {
+  /// construct
   #[allow(dead_code)]
   pub fn new(space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>) -> Self {
     OmegaSpacePoint{
@@ -96,6 +99,13 @@ impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a
     }
   }
 
+  /// to XYPoint
+  #[allow(dead_code)]
+  pub fn to_xy_point(&self) -> XYPoint {
+    self.point.to_xy_point(&self.space.basis)
+  }
+
+  /// add vector
   #[allow(dead_code)]
   pub fn plus(&self, vector: &OmegaSpaceVector<'a, N_DIRECTIONS, BASIS_SIZE>) -> Self {
     OmegaSpacePoint {
@@ -104,6 +114,7 @@ impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a
     }
   }
 
+  /// add unit vector in direction
   #[allow(dead_code)]
   pub fn plus_unit_in_direction(&self, direction: usize) -> Self {
     OmegaSpacePoint {
@@ -111,10 +122,26 @@ impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a
       point: self.point.plus(&self.space.unit_vectors[direction]),
     }
   }
+}
 
+/// vector implementation
+impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpaceVector<'a, N_DIRECTIONS, BASIS_SIZE> {
+  /// construct
   #[allow(dead_code)]
-  pub fn to_xy_point(&self) -> XYPoint {
-    self.point.to_xy_point(&self.space.basis)
+  pub fn new(space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>) -> Self {
+    OmegaSpaceVector{
+      space: &space,
+      vector: OmegaVector::zero(),
+    }
+  }
+
+  /// add
+  #[allow(dead_code)]
+  pub fn plus(&self, vector: &OmegaSpaceVector<'a, N_DIRECTIONS, BASIS_SIZE>) -> Self {
+    OmegaSpaceVector {
+      space: &self.space,
+      vector: self.vector.plus(&vector.vector)
+    }
   }
 }
 

@@ -94,6 +94,13 @@ This is nice because:
 * you can add vectors to vectors, and vectors to points, in any combination, by adding their components
 * you can the do a final conversion into $(x, y)$ as above
 
+In code, then,
+
+* we use the term $\omega$ _subcoordinate basis_ to refer to the vector and divisor above.  In Rust, this is `OmegaSubCoordBasis<N>` where, for the bases above, $N=2$.
+* we then express a _subcoordinate_ as a list of integers which we dot-multiply by the basis to get a definite $x$ or $y$ coordinate.  In Rust, this is `OmegaSubCoord`.
+* we do calculations with points and vectors in omega space, each comprising two omega subcoordinates.  In Rust, this is `OmegaPoint` and `OmegaVector`.  Addition in this space involves only integer arithmetic: a mild advantage of this is speed; the real advantage is that there is never any loss of precision.
+* ultimately, we'll be needing $(x, y)$ points comprising real coordinates.  In Rust, this is `XYPoint`.
+
 ## Directions
 
 You can express any direction as number a number $d$, so that
