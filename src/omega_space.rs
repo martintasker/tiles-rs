@@ -106,6 +106,11 @@ impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a
     &self.space
   }
 
+  /// get point
+  #[allow(dead_code)]
+  pub fn get_point(&self) -> &OmegaPoint<BASIS_SIZE> {
+    &self.point
+  }
 
   /// to XYPoint
   #[allow(dead_code)]

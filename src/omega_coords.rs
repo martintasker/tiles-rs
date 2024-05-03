@@ -1,4 +1,5 @@
 /// XYPoint is real x, y coords
+#[derive(PartialEq, Debug)]
 pub struct XYPoint {
   pub x: f64,
   pub y: f64,
@@ -37,7 +38,7 @@ pub fn add_sub_coords<const N: usize>(a: &OmegaSubCoords<N>, b: &OmegaSubCoords<
 }
 
 /// omega point is x, y subcoords
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Debug)]
 pub struct OmegaPoint<const N: usize> {
   pub x: OmegaSubCoords<N>,
   pub y: OmegaSubCoords<N>,

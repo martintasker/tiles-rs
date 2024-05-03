@@ -71,3 +71,26 @@ pub fn get_shape<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize>(
   }
   return res;
 }
+
+#[cfg(test)]
+mod tests {
+  use omega_coords::{XYPoint, OmegaPoint};
+  use omega_space::OMEGA8_SPACE;
+  use super::*;
+
+  #[test]
+  fn test_get_square() {
+    let space = OMEGA8_SPACE;
+    let start_point = OmegaSpacePoint::new(&space);
+    let square = get_square(start_point, 0);
+    assert_eq!(square.len(), 4);
+    assert_eq!(*(square[0].get_point()), OmegaPoint{x: [0, 0], y: [0, 0]});
+    assert_eq!(*(square[1].get_point()), OmegaPoint{x: [2, 0], y: [0, 0]});
+    assert_eq!(*(square[2].get_point()), OmegaPoint{x: [2, 0], y: [2, 0]});
+    assert_eq!(*(square[3].get_point()), OmegaPoint{x: [0, 0], y: [2, 0]});
+    assert_eq!(square[0].to_xy_point(), XYPoint{x: 0.0, y: 0.0});
+    assert_eq!(square[1].to_xy_point(), XYPoint{x: 1.0, y: 0.0});
+    assert_eq!(square[2].to_xy_point(), XYPoint{x: 1.0, y: 1.0});
+    assert_eq!(square[3].to_xy_point(), XYPoint{x: 0.0, y: 1.0});
+  }
+}
