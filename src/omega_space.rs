@@ -76,6 +76,7 @@ impl<const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpace<N_DIRECTIONS
 
 /// point in space
 #[allow(dead_code)]
+#[derive(Clone)]
 pub struct OmegaSpacePoint<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
   space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>,
   point: OmegaPoint<BASIS_SIZE>,
@@ -98,6 +99,13 @@ impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a
       point: OmegaPoint::origin(),
     }
   }
+
+  /// get space
+  #[allow(dead_code)]
+  pub fn get_space(&self) -> &OmegaSpace<N_DIRECTIONS, BASIS_SIZE> {
+    &self.space
+  }
+
 
   /// to XYPoint
   #[allow(dead_code)]

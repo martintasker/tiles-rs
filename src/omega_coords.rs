@@ -37,6 +37,7 @@ pub fn add_sub_coords<const N: usize>(a: &OmegaSubCoords<N>, b: &OmegaSubCoords<
 }
 
 /// omega point is x, y subcoords
+#[derive(Clone)]
 pub struct OmegaPoint<const N: usize> {
   pub x: OmegaSubCoords<N>,
   pub y: OmegaSubCoords<N>,

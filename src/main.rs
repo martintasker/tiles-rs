@@ -3,6 +3,7 @@ mod svg_writer;
 mod point2d;
 mod omega_coords;
 mod omega_space;
+mod omega_shapes;
 mod omega8;
 mod model8;
 mod omega12;
