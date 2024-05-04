@@ -20,16 +20,6 @@ pub const SPECTRE12: [i32; 14] = [
 ];
 
 #[allow(dead_code)]
-pub struct ShapeTemplate {
-  deltas: Vec<i32>,
-}
-
-#[allow(dead_code)]
-pub struct Tile<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
-  points: Vec<OmegaSpacePoint<'a, N_DIRECTIONS, BASIS_SIZE>>,
-}
-
-#[allow(dead_code)]
 pub fn get_square<'a>(start_point: OmegaSpacePoint<'a, 8, 2>, start_direction: usize) -> Vec<OmegaSpacePoint<8, 2>> {
   return get_shape(start_point, start_direction, &SQUARE8);
 }
