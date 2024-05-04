@@ -91,12 +91,21 @@ pub struct OmegaSpaceVector<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usi
 
 /// point implementation
 impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a, N_DIRECTIONS, BASIS_SIZE> {
-  /// construct
+  /// construct at origin
   #[allow(dead_code)]
   pub fn new(space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>) -> Self {
     OmegaSpacePoint{
       space: &space,
       point: OmegaPoint::origin(),
+    }
+  }
+
+  /// construct at point
+  #[allow(dead_code)]
+  pub fn new_at_point(space: &'a OmegaSpace<N_DIRECTIONS, BASIS_SIZE>, point: &OmegaPoint<BASIS_SIZE>) -> Self {
+    OmegaSpacePoint{
+      space: &space,
+      point: point.clone(),
     }
   }
 
