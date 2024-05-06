@@ -1,6 +1,7 @@
 mod tesselation;
 mod svg_writer;
 mod point2d;
+mod xy_point;
 mod omega_coords;
 mod omega_space;
 mod omega_shapes;

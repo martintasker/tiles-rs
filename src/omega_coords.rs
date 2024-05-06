@@ -1,9 +1,4 @@
-/// XYPoint is real x, y coords
-#[derive(PartialEq, Debug)]
-pub struct XYPoint {
-  pub x: f64,
-  pub y: f64,
-}
+use xy_point::XYPoint;
 
 // a subcoordinate is the x or y coordinate for a point
 // the basis is

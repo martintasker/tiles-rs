@@ -1,6 +1,7 @@
 // definitions for omega8 and omega12 space
 
-use omega_coords::{OmegaSubCoordBasis, OmegaVector, OmegaPoint, XYPoint};
+use xy_point::XYPoint;
+use omega_coords::{OmegaSubCoordBasis, OmegaVector, OmegaPoint};
 
 pub const SQRT2: f64 = std::f64::consts::SQRT_2;
 pub const SQRT3: f64 = 1.7320508075688772935274463;

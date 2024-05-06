@@ -64,7 +64,8 @@ pub fn get_shape<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize>(
 
 #[cfg(test)]
 mod tests {
-  use omega_coords::{XYPoint, OmegaPoint};
+  use xy_point::XYPoint;
+  use omega_coords::OmegaPoint;
   use omega_space::{OMEGA8_SPACE, OMEGA12_SPACE};
   use super::*;
 
