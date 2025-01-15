@@ -26,32 +26,34 @@ fn main() -> std::io::Result<()> {
   {
     // single square
     let mut writer = SVGWriter::new("out-new-square.svg")?;
+    let mut model: Tesselation<8, 2> = Tesselation::new();
+
     let square = get_square(OmegaSpacePoint::new(&OMEGA8_SPACE), 0);
-    let tile0 = Tile::new(&square);
-    let mut tesselation: Tesselation<8, 2> = Tesselation::new();
-    tesselation.add(tile0);
-    let new_square_model_xy = tesselation
+    model.add(Tile::new(&square));
+
+    let model_xy = model
       .get_tiles()
       .iter()
       .map(get_xy_list_from_tile)
       .filter(is_all_inside)
       .collect();
-    writer.write_model(new_square_model_xy)?;
+    writer.write_model(model_xy)?;
   }
   {
-    // single square
+    // single hexagon
     let mut writer = SVGWriter::new("out-new-hexagon.svg")?;
+    let mut model: Tesselation<12, 2> = Tesselation::new();
+
     let hexagon = get_hexagon(OmegaSpacePoint::new(&OMEGA12_SPACE), 0);
-    let tile12 = Tile::new(&hexagon);
-    let mut tesselation: Tesselation<12, 2> = Tesselation::new();
-    tesselation.add(tile12);
-    let new_hexagon_model_xy = tesselation
+    model.add(Tile::new(&hexagon));
+
+    let model_xy = model
       .get_tiles()
       .iter()
       .map(get_xy_list_from_tile)
       .filter(is_all_inside)
       .collect();
-    writer.write_model(new_hexagon_model_xy)?;
+    writer.write_model(model_xy)?;
   }
 
   // old-style tesselations
