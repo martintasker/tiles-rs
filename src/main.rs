@@ -17,12 +17,14 @@ use svg_writer::SVGWriter;
 use xy_point::XYPoint;
 use xy_util::{get_xy_point_list_from12, get_xy_point_list_from8, is_all_inside};
 
-use omega_shapes::get_square;
-use omega_space::{OMEGA8_SPACE, OmegaSpacePoint};
+use omega_shapes::{get_hexagon, get_square};
+use omega_space::{OmegaSpacePoint, OMEGA12_SPACE, OMEGA8_SPACE};
 use omega_tiles::{Tile, Tesselation};
 
 fn main() -> std::io::Result<()> {
+  // tesselations using new plumbing
   {
+    // single square
     let mut writer = SVGWriter::new("out-new-square.svg")?;
     let square = get_square(OmegaSpacePoint::new(&OMEGA8_SPACE), 0);
     let tile0 = Tile::new(&square);
@@ -36,6 +38,23 @@ fn main() -> std::io::Result<()> {
       .collect();
     writer.write_model(new_square_model_xy)?;
   }
+  {
+    // single square
+    let mut writer = SVGWriter::new("out-new-hexagon.svg")?;
+    let hexagon = get_hexagon(OmegaSpacePoint::new(&OMEGA12_SPACE), 0);
+    let tile12 = Tile::new(&hexagon);
+    let mut tesselation: Tesselation<12, 2> = Tesselation::new();
+    tesselation.add(tile12);
+    let new_hexagon_model_xy = tesselation
+      .get_tiles()
+      .iter()
+      .map(get_xy_list_from_tile)
+      .filter(is_all_inside)
+      .collect();
+    writer.write_model(new_hexagon_model_xy)?;
+  }
+
+  // old-style tesselations
   {
     let mut writer = SVGWriter::new("out-spectre.svg")?;
     let spectre_model = spectre_model::get();
@@ -57,14 +76,14 @@ fn main() -> std::io::Result<()> {
   Ok(())
 }
 
-fn get_xy_list_from_tile<'a>(tile: &Tile<'a, 8, 2>) -> Vec<XYPoint> {
+fn get_xy_list_from_tile<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize>(tile: &Tile<'a, N_DIRECTIONS, BASIS_SIZE>) -> Vec<XYPoint> {
   return tile
     .get_points()
     .iter()
-    .map(get_xy_from_omega8)
+    .map(get_xy)
   .collect();
 }
 
-fn get_xy_from_omega8<'a>(point: &OmegaSpacePoint<'a, 8, 2>) -> XYPoint {
+fn get_xy<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize>(point: &OmegaSpacePoint<'a, N_DIRECTIONS, BASIS_SIZE>) -> XYPoint {
   point.to_xy_point()
 }
