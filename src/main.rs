@@ -13,11 +13,12 @@ mod model12;
 mod spectre_model;
 mod shapes;
 
+use omega_coords::OmegaPoint;
 use svg_writer::SVGWriter;
 use xy_point::XYPoint;
 use xy_util::{get_xy_point_list_from12, get_xy_point_list_from8, is_all_inside};
 
-use omega_shapes::{get_hexagon, get_square};
+use omega_shapes::{get_hexagon, get_octagon, get_square};
 use omega_space::{OmegaSpacePoint, OMEGA12_SPACE, OMEGA8_SPACE};
 use omega_tiles::{Tile, Tesselation};
 
@@ -25,11 +26,13 @@ fn main() -> std::io::Result<()> {
   // tesselations using new plumbing
   {
     // single square
-    let mut writer = SVGWriter::new("out-new-square.svg")?;
+    let mut writer = SVGWriter::new("out-new-omega8.svg")?;
     let mut model: Tesselation<8, 2> = Tesselation::new();
 
-    let square = get_square(OmegaSpacePoint::new(&OMEGA8_SPACE), 0);
-    model.add(Tile::new(&square));
+    let t1 = get_square(OmegaSpacePoint::new(&OMEGA8_SPACE), 0);
+    model.add(Tile::new(&t1));
+    let t2 = get_octagon(OmegaSpacePoint::new_at_point(&OMEGA8_SPACE, &OmegaPoint{x: [4, 0], y: [0, 0]}), 0);
+    model.add(Tile::new(&t2));
 
     let model_xy = model
       .get_tiles()
