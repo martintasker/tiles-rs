@@ -25,4 +25,4 @@ See [release notes](./RELEASES.md).
 Refactoring:
 
 - [new omega8 model](./out-new-omega8.svg)
-- [new hexagon](./out-new-hexagon.svg)
+- [new hexagon](./out-new-omega12.svg)
