@@ -3,6 +3,8 @@
 use xy_point::XYPoint;
 use omega_coords::{OmegaSubCoordBasis, OmegaVector, OmegaPoint};
 
+use crate::omega_coords::OmegaSubCoords;
+
 pub const SQRT2: f64 = std::f64::consts::SQRT_2;
 pub const SQRT3: f64 = 1.7320508075688772935274463;
 
@@ -10,6 +12,7 @@ pub const SQRT3: f64 = 1.7320508075688772935274463;
 pub struct OmegaSpace<const N_DIRECTIONS: usize, const BASIS_SIZE: usize> {
   pub unit_vectors: [OmegaVector<BASIS_SIZE>; N_DIRECTIONS],
   pub basis: OmegaSubCoordBasis<BASIS_SIZE>,
+  pub scale: fn(OmegaSubCoords<BASIS_SIZE>, &[i32; BASIS_SIZE]) -> OmegaSubCoords<BASIS_SIZE>,
 }
 
 // basis, vectors and space for omega8
@@ -28,13 +31,17 @@ pub const OMEGA8_UNIT_VECTORS: [OmegaVector<2>; 8] = [
   OmegaVector {dx: [0, 0], dy: [-2, 0]},
   OmegaVector {dx: [0, 1], dy: [0, -1]},
 ];
+fn scale8(basis: OmegaSubCoords<2>, scale: &[i32; 2]) -> OmegaSubCoords<2> {
+  [basis[0]*scale[0] + 2 * basis[1] * scale[1], basis[0] * scale[1] + basis[1]* scale[0]]
+}
 #[allow(dead_code)]
 pub const OMEGA8_SPACE: OmegaSpace<8, 2> = OmegaSpace {
   unit_vectors: OMEGA8_UNIT_VECTORS,
   basis: OMEGA8_BASIS,
+  scale: scale8,
 };
 
-// basis, vectors and space for omega8
+// basis, vectors and space for omega12
 
 pub const OMEGA12_BASIS: OmegaSubCoordBasis<2> = OmegaSubCoordBasis{
   coefficients: [1.0, SQRT3],
@@ -54,10 +61,14 @@ pub const OMEGA12_UNIT_VECTORS: [OmegaVector<2>; 12] = [
   OmegaVector {dx: [1, 0], dy: [0, -1]},
   OmegaVector {dx: [0, 1], dy: [-1, 0]},
 ];
+fn scale12(basis: OmegaSubCoords<2>, scale: &[i32; 2]) -> OmegaSubCoords<2> {
+  [basis[0]*scale[0] + 3 * basis[1] * scale[1], basis[0] * scale[1] + basis[1]* scale[0]]
+}
 #[allow(dead_code)]
 pub const OMEGA12_SPACE: OmegaSpace<12, 2> = OmegaSpace {
   unit_vectors: OMEGA12_UNIT_VECTORS,
   basis: OMEGA12_BASIS,
+  scale: scale12,
 };
 
 /// space functions
@@ -72,6 +83,14 @@ impl<const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpace<N_DIRECTIONS
   #[allow(dead_code)]
   pub fn direction_plus(&self, direction: usize, delta: i32) -> usize {
     (((direction + N_DIRECTIONS) as i32 + delta) as usize) % N_DIRECTIONS
+  }
+
+  // scale a vector
+  pub fn scale_vector(&self, v: &OmegaVector<BASIS_SIZE>, scale: &OmegaSubCoords<BASIS_SIZE>) -> OmegaVector<BASIS_SIZE> {
+    OmegaVector{
+      dx: (self.scale)(v.dx, scale),
+      dy: (self.scale)(v.dy, scale),
+    }
   }
 }
 
@@ -145,7 +164,19 @@ impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpacePoint<'a
       point: self.point.plus(&self.space.unit_vectors[direction]),
     }
   }
+
+  /// add scaled vector in direction
+  #[allow(dead_code)]
+  pub fn plus_in_direction(&self, direction: usize, side_length: &OmegaSubCoords<BASIS_SIZE>) -> Self {
+    let unit_vector = &self.space.unit_vectors[direction];
+    let scaled_vector = self.space.scale_vector(unit_vector, &side_length);
+    OmegaSpacePoint {
+      space: &self.space,
+      point: self.point.plus(&scaled_vector),
+    }
+  }
 }
+
 
 /// vector implementation
 impl <'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize> OmegaSpaceVector<'a, N_DIRECTIONS, BASIS_SIZE> {
@@ -175,10 +206,7 @@ mod tests {
 
   #[test]
   fn test_direction_plus() {
-    let space: OmegaSpace<12, 0> = OmegaSpace{
-      unit_vectors: core::array::from_fn(|_| OmegaVector{dx: [], dy: []}),
-      basis: OmegaSubCoordBasis{ coefficients: [], divisor: 2},
-    };
+    let space = OMEGA12_SPACE;
     assert_eq!(space.direction_plus(0, 1), 1);
     assert_eq!(space.direction_plus(0, -1), 11);
     assert_eq!(space.direction_plus(8, 5), 1);
