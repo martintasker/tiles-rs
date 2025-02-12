@@ -18,7 +18,7 @@ use svg_writer::SVGWriter;
 use xy_point::XYPoint;
 use xy_util::{get_xy_point_list_from12, get_xy_point_list_from8, is_all_inside};
 
-use omega_shapes::{get_hexagon, get_octagon, get_spectre, get_square, get_triangle, get_truncated_triangle};
+use omega_shapes::{get_hat, get_hexagon, get_octagon, get_spectre, get_square, get_triangle, get_truncated_triangle};
 use omega_space::{OmegaSpacePoint, OMEGA12_SPACE, OMEGA8_SPACE};
 use omega_tiles::{Tile, Tesselation};
 
@@ -47,14 +47,16 @@ fn main() -> std::io::Result<()> {
     let mut writer = SVGWriter::new("out-new-omega12.svg")?;
     let mut model: Tesselation<12, 2> = Tesselation::new();
 
-    let t1 = get_hexagon(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [-4, 0], y: [-4, 0]}), 0);
+    let t1 = get_hexagon(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [4, 0], y: [-8, 0]}), 0);
     model.add(Tile::new(&t1));
-    let t2 = get_triangle(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [4, 0], y: [-4, 0]}), 0);
+    let t2 = get_triangle(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [4, 0], y: [-2, 0]}), 0);
     model.add(Tile::new(&t2));
     let t3 = get_spectre(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [-4, 0], y: [4, 0]}), 0);
     model.add(Tile::new(&t3));
     let t4 = get_truncated_triangle(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [4, 0], y: [4, 0]}), 0);
     model.add(Tile::new(&t4));
+    let t5 = get_hat(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [-4, 0], y: [-8, 0]}), 0);
+    model.add(Tile::new(&t5));
 
     let model_xy = model
       .get_tiles()

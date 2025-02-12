@@ -21,6 +21,21 @@ pub const SPECTRE12: [i32; 14] = [
 pub const TRUNCATED_TRIANGLE12: [([i32; 2], i32); 6] = [
   ([2, 0], 2), ([1, 0], 2), ([2, 0], 2), ([1, 0], 2), ([2, 0], 2), ([1, 0], 2)
 ];
+pub const HAT: [([i32; 2], i32); 13] = [
+  ([2, 0], 2),
+  ([1, 0], 3),
+  ([0, 1], -2),
+  ([0, 1], 3),
+  ([1, 0], -2),
+  ([1, 0], 3),
+  ([0, 1], 2),
+  ([0, 1], -3),
+  ([1, 0], 2),
+  ([1, 0], 3),
+  ([0, 1], 2),
+  ([0, 1], -3),
+  ([1, 0], 2),
+];
 
 #[allow(dead_code)]
 pub fn get_square<'a>(start_point: OmegaSpacePoint<'a, 8, 2>, start_direction: usize) -> Vec<OmegaSpacePoint<8, 2>> {
@@ -50,6 +65,10 @@ pub fn get_spectre<'a>(start_point: OmegaSpacePoint<'a, 12, 2>, start_direction:
 #[allow(dead_code)]
 pub fn get_truncated_triangle<'a>(start_point: OmegaSpacePoint<'a, 12, 2>, start_direction: usize) -> Vec<OmegaSpacePoint<12, 2>> {
   return get_shape(start_point, start_direction, &TRUNCATED_TRIANGLE12);
+}
+#[allow(dead_code)]
+pub fn get_hat<'a>(start_point: OmegaSpacePoint<'a, 12, 2>, start_direction: usize) -> Vec<OmegaSpacePoint<12, 2>> {
+  return get_shape(start_point, start_direction, &HAT);
 }
 
 pub fn get_shape_with_unit_sides<'a, const N_DIRECTIONS: usize, const BASIS_SIZE: usize>(
