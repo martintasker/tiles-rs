@@ -18,11 +18,7 @@ cargo run
 
 Then observe the output SVG in some preview or browser (or here).
 
-![Spectre](./out-spectre.svg) ![Hexagons](./out12.svg) ![Octagons](./out8.svg)
+![Spectre](./out-spectre.svg) ![Hats](./out-hats.svg)
+![Hexagons](./out12.svg) ![Octagons](./out8.svg)
 
 See [release notes](./RELEASES.md).
-
-Refactoring:
-
-- [new omega8 model](./out-new-omega8.svg)
-- [new hexagon](./out-new-omega12.svg)

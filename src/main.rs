@@ -67,6 +67,29 @@ fn main() -> std::io::Result<()> {
     writer.write_model(model_xy)?;
   }
 
+  {
+    // hat model
+    let mut writer = SVGWriter::new("out-hats.svg")?;
+    let mut model: Tesselation<12, 2> = Tesselation::new();
+
+    let t1 = get_hat(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [-4, 0], y: [-8, 0]}), 0);
+    model.add(Tile::new(&t1));
+    let t2 = get_hat(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [-4, 0], y: [-1, 0]}), 0);
+    model.add(Tile::new(&t2));
+    // let t3 = get_hat(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [6, 0], y: [-6, 1]}), 2);
+    // let t3 = get_hat(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [6, 0], y: [-4, 0]}), 2);
+    let t3 = get_hat(OmegaSpacePoint::new_at_point(&OMEGA12_SPACE, &OmegaPoint{x: [6, 0], y: [-8, 2]}), 2);
+    model.add(Tile::new(&t3));
+
+    let model_xy = model
+      .get_tiles()
+      .iter()
+      .map(get_xy_list_from_tile)
+      .filter(is_all_inside)
+      .collect();
+    writer.write_model(model_xy)?;
+  }
+
   // old-style tesselations
   {
     let mut writer = SVGWriter::new("out-spectre.svg")?;
